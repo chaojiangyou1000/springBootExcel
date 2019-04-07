@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springBootExcel.mapper.ClientMapper">
+	<resultMap id="BaseResultMap" type="com.springBootExcel.entity.Client">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="bianhao" property="bianhao" jdbcType="VARCHAR" />
+		<result column="create_date_time" property="createDateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, bianhao, create_date_time, name, phone, remark
+	</sql>
+
+
+	<select id="selectClientPage" parameterType="java.util.Map"
+		resultType="com.springBootExcel.entity.Client">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_client LIMIT #{a},#{b}
+	</select>
+
+
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM
+		t_client
+	</select>
+
+
+	<select id="findAllClient" resultType="com.springBootExcel.entity.Client">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_client
+	</select>
+
+
+	<!-- 批量语句，只要有一个失败，就会全部失败。开发程序的时候要注意这点 -->
+	<!-- item：集合中每一个元素进行迭代时的别名 -->
+	<select id="insertClientList" resultType="java.lang.Integer" parameterType="com.springBootExcel.entity.Client">
+		insert into t_client (bianhao, create_date_time,name, phone,remark)
+		values
+		<foreach collection="list" item="item" separator="," open="("
+			close=")">
+			(
+			#{item.bianhao,jdbcType=VARCHAR},
+			#{item.createDateTime,jdbcType=TIMESTAMP},
+			#{item.name,jdbcType=VARCHAR},
+			#{item.phone,jdbcType=VARCHAR},
+			#{item.remark,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_client
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_client
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.springBootExcel.entity.Client">
+		insert into t_client (id,
+		bianhao, create_date_time,
+		name, phone, remark
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{bianhao,jdbcType=VARCHAR},
+		#{createDateTime,jdbcType=TIMESTAMP},
+		#{name,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.springBootExcel.entity.Client">
+		insert into t_client
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="bianhao != null">
+				bianhao,
+			</if>
+			<if test="createDateTime != null">
+				create_date_time,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="bianhao != null">
+				#{bianhao,jdbcType=VARCHAR},
+			</if>
+			<if test="createDateTime != null">
+				#{createDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.springBootExcel.entity.Client">
+		update t_client
+		<set>
+			<if test="bianhao != null">
+				bianhao = #{bianhao,jdbcType=VARCHAR},
+			</if>
+			<if test="createDateTime != null">
+				create_date_time = #{createDateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.springBootExcel.entity.Client">
+		update t_client
+		set bianhao = #{bianhao,jdbcType=VARCHAR},
+		create_date_time =
+		#{createDateTime,jdbcType=TIMESTAMP},
+		name = #{name,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
