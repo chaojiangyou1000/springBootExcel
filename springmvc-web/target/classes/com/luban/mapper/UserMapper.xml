@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luban.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.luban.entity.User">
+		<id column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="USER_CODE" property="userCode"
+			jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName"
+			jdbcType="VARCHAR" />
+		<result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+		<result column="MAIL" property="mail" jdbcType="VARCHAR" />
+		<result column="ADDR" property="addr" jdbcType="VARCHAR" />
+		<result column="BORN" property="born" jdbcType="VARCHAR" />
+		<result column="IN_DATE" property="inDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_DATE" property="createDate"
+			jdbcType="TIMESTAMP" />
+		<result column="USER_TYPE" property="userType"
+			jdbcType="INTEGER" />
+		<result column="USER_STATUS" property="userStatus"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		USER_ID, USER_CODE, USER_NAME, USER_PWD, MAIL, ADDR, BORN, IN_DATE,
+		CREATE_DATE,
+		USER_TYPE, USER_STATUS
+	</sql>
+	
+	
+	
+	<select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from blog_user
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</select>
+	
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from blog_user
+	</select>
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from blog_user
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from blog_user
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.luban.entity.User">
+		insert into blog_user (USER_ID, USER_CODE, USER_NAME,
+		USER_PWD, MAIL, ADDR,
+		BORN, IN_DATE, CREATE_DATE,
+		USER_TYPE, USER_STATUS)
+		values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{userPwd,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
+		#{born,jdbcType=VARCHAR}, #{inDate,jdbcType=TIMESTAMP},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{userType,jdbcType=INTEGER}, #{userStatus,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.luban.entity.User">
+		insert into blog_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="userCode != null">
+				USER_CODE,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="userPwd != null">
+				USER_PWD,
+			</if>
+			<if test="mail != null">
+				MAIL,
+			</if>
+			<if test="addr != null">
+				ADDR,
+			</if>
+			<if test="born != null">
+				BORN,
+			</if>
+			<if test="inDate != null">
+				IN_DATE,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="userType != null">
+				USER_TYPE,
+			</if>
+			<if test="userStatus != null">
+				USER_STATUS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="userCode != null">
+				#{userCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				#{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				#{mail,jdbcType=VARCHAR},
+			</if>
+			<if test="addr != null">
+				#{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="born != null">
+				#{born,jdbcType=VARCHAR},
+			</if>
+			<if test="inDate != null">
+				#{inDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="userStatus != null">
+				#{userStatus,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.luban.entity.User">
+		update blog_user
+		<set>
+			<if test="userCode != null">
+				USER_CODE = #{userCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				USER_PWD = #{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="mail != null">
+				MAIL = #{mail,jdbcType=VARCHAR},
+			</if>
+			<if test="addr != null">
+				ADDR = #{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="born != null">
+				BORN = #{born,jdbcType=VARCHAR},
+			</if>
+			<if test="inDate != null">
+				IN_DATE = #{inDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userType != null">
+				USER_TYPE = #{userType,jdbcType=INTEGER},
+			</if>
+			<if test="userStatus != null">
+				USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.luban.entity.User">
+		update blog_user
+		set USER_CODE = #{userCode,jdbcType=VARCHAR},
+		USER_NAME = #{userName,jdbcType=VARCHAR},
+		USER_PWD = #{userPwd,jdbcType=VARCHAR},
+		MAIL = #{mail,jdbcType=VARCHAR},
+		ADDR = #{addr,jdbcType=VARCHAR},
+		BORN = #{born,jdbcType=VARCHAR},
+		IN_DATE = #{inDate,jdbcType=TIMESTAMP},
+		CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+		USER_TYPE = #{userType,jdbcType=INTEGER},
+		USER_STATUS = #{userStatus,jdbcType=VARCHAR}
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</update>
+</mapper>
